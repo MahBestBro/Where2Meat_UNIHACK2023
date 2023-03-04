@@ -1,4 +1,5 @@
 import getPlaces from "./locationfinder.js"
+import "./addlocationpicker.js"
 
 const API_KEY = "AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI";
 // getPlaces("monash", API_KEY)
@@ -12,7 +13,7 @@ function initMap() {
         position.lat = pos.coords.latitude;
         position.lng = pos.coords.longitude;
 
-        new google.maps.Map(document.getElementById("map"), {
+        window.map = new google.maps.Map(document.getElementById("map"), {
             zoom: 17,
             center: {
                 lat: parseFloat(position.lat),
