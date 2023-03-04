@@ -46,10 +46,25 @@ app.get("/recommendations", async (req, res) => {
   const centrePoint = findCentrePoint(locations)
   console.log(centrePoint);
   // search for restaurants
-  const response = await searchForFoodPlaces(centrePoint, (err, place) => {
-    console.log(place)
+  const data = []
+  await searchForFoodPlaces(centrePoint, (err, place) => {
+    if (err) return
+    data.push(place)
+    // res.json(place)
+    // const temp = {
+    //   name: place.name,
+    //   rating: place.rating,
+    //   address: place.vicinity,
+    //   types: place.types
+    // }
+    // if (place.photos) {
+    //   temp.photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photos[0].photo_reference}&key=${process.env.API_KEY}`
+    // }
+    // data.push(temp)
   }, 1000, false)
-  res.send(response)
+
+  console.log(data)
+  // res.json(data)
 })
 
 var next_page_token = "";

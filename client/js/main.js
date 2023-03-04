@@ -1,4 +1,5 @@
 import getPlaces from "./locationfinder.js"
+import "./addlocationpicker.js"
 
 const API_KEY = "AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI";
 // getPlaces("monash", API_KEY)
