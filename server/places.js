@@ -38,6 +38,7 @@ async function autocompleteLocationSearch(query) {
     const url = new URL("https://maps.googleapis.com/maps/api/place/autocomplete/json")
     url.searchParams.append("input", query)
     url.searchParams.append("types", "establishment")
+    url.searchParams.append("region", "au")
     url.searchParams.append("key", process.env.API_KEY)
 
     const response = await axios.get(url.href)
