@@ -4,4 +4,4 @@ If you want to have the backend work, you'll need to make your own .env file in 
 
     "API_KEY="{YOUR_API_KEY_HERE}"
 
-from there, it should work (hopefully *fingers_crossed*)
+from there, it should work (hopefully 🤞).
