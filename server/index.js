@@ -20,7 +20,7 @@ app.use(cors())
 
 // helper functions
 const { findCentrePoint } = require("./center.js")
-const autocompleteSearch = require("./places.js")
+const { autocompleteLocationSearch, placeDetails } = require("./places.js")
 
 
 app.get('/', (req, res) => {
@@ -29,7 +29,26 @@ app.get('/', (req, res) => {
 
 app.get("/places/autocomplete/:q", async (req, res) => {
   const query = req.params.q
-  const response = await autocompleteSearch(query)
+  const response = await autocompleteLocationSearch(query)
+  res.send(response)
+})
+
+app.get("/places/details/:placeid", async (req, res) => {
+  const placeId = req.params.placeid
+  const response = await placeDetails(placeId)
+  res.send(response)
+})
+
+app.get("/recommendations", async (req, res) => {
+  // query string form: /recommendations?locations=[{lat: 1, lng: 2}, {lat: 3, lng: 4}]
+  const locations = JSON.parse(req.query.locations).map(location => [location.lat, location.lng])
+  console.log(locations)
+  const centrePoint = findCentrePoint(locations)
+  console.log(centrePoint);
+  // search for restaurants
+  const response = await searchForFoodPlaces(centrePoint, (err, place) => {
+    console.log(place)
+  }, 1000, false)
   res.send(response)
 })
 
@@ -67,7 +86,7 @@ const searchForFoodPlaces = (
   const options = {
     location: lat_lon_point,
     radius: radius_m,
-    types: ["cafe", "restaurant", "bar"]
+    types: ["cafe", "restaurant"/*, "bar"*/]
   };
 
   if (search_with_previous_options) {
