@@ -52,17 +52,43 @@ const submitButton = document.querySelector("button#submit");
 const map = document.querySelector("#map");
 submitButton.addEventListener("click", async (e) => {
     e.preventDefault();
+    // Place markers on the map
     const placeIds = [...inputs].filter(input => input.value.trim() != "").map(input => input.parentElement.querySelector("datalist").querySelector("option").dataset.placeId);
-    placeIds.forEach(async (placeId, index) => {
+
+    const locations = []
+
+    // placeIds.forEach(async (placeId, index) => {
+    //     const response = await fetch("/places/details/" + placeId);
+    //     const { result } = await response.json();
+    //     const { location } = result.geometry;
+    //     console.log("location", index, location)
+    //     locations.push(location)
+    //     new google.maps.Marker({
+    //         position: location,
+    //         map: window.map,
+    //         title: `marker: ${index.toString()} : ${result.name}`
+    //     })
+    // })
+
+    for await (const [index, placeId] of placeIds.entries()) {
         const response = await fetch("/places/details/" + placeId);
         const { result } = await response.json();
         const { location } = result.geometry;
+        console.log("location", location)
+        locations.push(location)
         new google.maps.Marker({
             position: location,
             map: window.map,
-            title: index.toString()
+            title: `marker: ${index.toString()} : ${result.name}`
         })
-    })
+    }
+
+
+    console.log("locations", locations)
+    // get the central location
+    const recommendations = await fetch(`/recommendations?locations=${JSON.stringify(locations)}`);
+    const data = await recommendations.json();
+    console.log(data)
 
 })
 
