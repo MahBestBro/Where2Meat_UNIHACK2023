@@ -12,7 +12,7 @@ function initMap() {
         position.lat = pos.coords.latitude;
         position.lng = pos.coords.longitude;
 
-        new google.maps.Map(document.getElementById("map"), {
+        window.map = new google.maps.Map(document.getElementById("map"), {
             zoom: 17,
             center: {
                 lat: parseFloat(position.lat),
