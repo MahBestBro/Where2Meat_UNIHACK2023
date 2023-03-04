@@ -1,0 +1,40 @@
+:root {
+    --black: black;
+    --white: white;
+    --primary: hsl(209, 59%, 20%);
+    --secondary: #3482cb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    height: 100vh;
+    color: var(--white);
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+main {
+    width: 100%;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.main iframe {
+    height: 100%;
+    width: 100%;
+}

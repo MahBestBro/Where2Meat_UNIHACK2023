@@ -1,0 +1,56 @@
+aside {
+    height: 100%;
+    background-color: var(--primary);
+    min-width: 400px;
+}
+
+nav {
+    padding-inline: 1rem;
+}
+
+nav header {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    text-transform: uppercase;
+    gap: 1rem;
+    font-size: 2rem;
+}
+
+nav header img {
+    width: 50px;
+    height: 50px;
+    margin-block: 1rem;
+    border-radius: 5px;
+}
+
+.location {
+    display: flex;
+    flex-flow: column;
+}
+
+.location-picker__item {
+    display: flex;
+    padding: 0.5rem 0;
+}
+
+nav input {
+    width: 100%;
+    padding: 2px 5px;
+    height: 1.5rem;
+}
+
+.add-item button {
+    background-color: transparent;
+    border: 1px solid var(--white);
+    border-radius: 50%;
+    padding: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+}
+
+.add-item button img {
+    width: 100%;
+    height: 100%;
+}
