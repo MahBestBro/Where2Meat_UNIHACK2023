@@ -7,8 +7,8 @@ const autocompleteSearch = require("./places.js")
 const googleLocations = require('google-locations');
 const locations = new googleLocations(process.env.API_KEY);
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
 // set the public folder to serve public assets
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')))
@@ -54,10 +54,10 @@ Parameters:
   can be found, throws a 'Search Error' as defined above. 
 
 Example:
-    searchForCafesAndRestaurants([-37.850921, 145.098048], (err, place) => console.log(place.name));
+    searchForFoodPlaces([-37.850921, 145.098048], (err, place) => console.log(place.name));
     Output: McDonald's Burwood
 */
-const searchForCafesAndRestaurants = (
+const searchForFoodPlaces = (
   lat_lon_point,
   callback,
   radius_m = 100,
@@ -66,7 +66,7 @@ const searchForCafesAndRestaurants = (
   const options = {
     location: lat_lon_point,
     radius: radius_m,
-    types: ["cafe", "restaurant"]
+    types: ["cafe", "restaurant", "bar"]
   };
 
   if (search_with_previous_options) {
@@ -77,13 +77,34 @@ const searchForCafesAndRestaurants = (
   }
 
   locations.search(options, (err, response) => {
-    results = [];
     for (let place of response.results) {
-      locations.details({ placeid: place.place_id }, (err, response) => callback(err, response.result))
+      locations.details({ placeid: place.place_id }, (err, response) => {
+        const result = response.result;
+        for (let i in result.photos) result.photos[i].html_attributions.length = 0;
+        callback(err, result);
+      });
     }
     next_page_token = (response.hasOwnProperty('next_page_token')) ? response.next_page_token : "";
   })
 }
+
+/*
+Gets health rating from given place with 'place_id'. 
+
+Notes: 
+- This function likely can't be used outside of callbacks you need a place_id, and that is only obtained asynchronously from 
+  what I know.
+- The returned value is a dummy value, in an actual implementation this would do some more processing to get a proper health 
+  rating.
+
+Example:
+  searchForFoodPlaces([-37.850921, 145.098048], (err, place) => getHealthRating(place.place_id, (rating) => console.log(rating)));
+  Output: 3.6
+*/
+const getHealthRating = (place_id, callback) => {
+  locations.details({ placeid: place_id }, (err, response) => callback(response.result.rating));
+}
+
 
 //locations.searchByAddress({
 //    address: '1600 Amphitheatre Pkwy, Mountain View, CA', 
