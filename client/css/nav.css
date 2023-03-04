@@ -29,6 +29,11 @@ nav header img {
     flex-flow: column;
 }
 
+/* .location summary {
+    display: flex;
+    flex-flow: row-reverse;
+} */
+
 .location-picker__item {
     display: flex;
     padding: 0.5rem 0;

@@ -1,21 +1,8 @@
-// if (window.navigator.geolocation) {
-//     // Geolocation available
-//     console.log("Geolocation available")
-//     window.navigator.geolocation.getCurrentPosition(success, error);
-// } else {
-//     // Geolocation not available
-//     console.log("Geolocation not available")
-//     window.navigator.geolocation.getCurrentPosition(success, error);
-// }
+import getPlaces from "./locationfinder.js"
 
-// function success(position) {
-//     console.log("success")
-//     console.log(position)
-// }
+const API_KEY = "AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI";
+getPlaces("monash", API_KEY)
 
-// function error() {
-//     console.log("error")
-// }
 
 function initMap() {
     console.log("initMap")

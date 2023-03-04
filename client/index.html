@@ -12,6 +12,9 @@
 
     <!-- js -->
     <script type="module" src="./js/main.js"></script>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI&callback=initMap">
+            </script>
 </head>
 
 <body class="flex">
@@ -23,7 +26,7 @@
             </header>
             <details class="location" open>
                 <summary>
-                    <h2>Location</h2>
+                    Location
                 </summary>
                 <div class="location-picker" data-items="3">
                     <div class="location-picker__item">
@@ -42,17 +45,16 @@
                     </div>
                 </div>
                 <div>
-
-                    </footer>
             </details>
         </nav>
     </aside>
     <main>
         <section class="main">
-            <iframe style="border:0" loading="lazy" allowfullscreen
+            <div id="map"></div>
+            <!-- <iframe style="border:0" loading="lazy" allowfullscreen
                     referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI
-    &q=Space+Needle,Seattle+WA">
-            </iframe>
+    &q=caulfield">
+            </iframe> -->
         </section>
     </main>
 
