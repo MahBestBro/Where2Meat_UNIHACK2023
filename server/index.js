@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const env = require('dotenv').config()
+const cors = require('cors')
 
 var googleLocations = require('google-locations');
 var locations = new googleLocations(process.env.API_KEY);
@@ -8,8 +9,18 @@ var locations = new googleLocations(process.env.API_KEY);
 const app = express()
 const port = 3000
 
+// set the public folder to serve public assets
+app.use(express.static(path.join(__dirname, '..', 'client', 'public')))
+app.use(express.static(path.join(__dirname, '..', 'client', 'css')))
+app.use(express.static(path.join(__dirname, '..', 'client', 'js')))
+app.set("views", path.join(__dirname, '..', 'client', 'views'));
+app.set("view engine", "html");
+app.engine('html', require('ejs').renderFile);
+app.use(cors())
+
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.render("index")
 })
 
 var next_page_token = "";
@@ -40,28 +51,28 @@ Example:
     Output: McDonald's Burwood
 */
 const searchForCafesAndRestaurants = (
-  lat_lon_point, 
-  callback, 
+  lat_lon_point,
+  callback,
   radius_m = 100,
   search_with_previous_options = false,
 ) => {
   const options = {
     location: lat_lon_point,
     radius: radius_m,
-    types: ["cafe", "restaurant"] 
+    types: ["cafe", "restaurant"]
   };
 
   if (search_with_previous_options) {
     if (next_page_token === "")
       throw new SearchError("Attempted to search with previous options when no further results can be found.");
-    
+
     options.page_token = next_page_token;
-  } 
+  }
 
   locations.search(options, (err, response) => {
     results = [];
     for (let place of response.results) {
-      locations.details({placeid: place.place_id}, (err, response) => callback(err, response.result))
+      locations.details({ placeid: place.place_id }, (err, response) => callback(err, response.result))
     }
     next_page_token = (response.hasOwnProperty('next_page_token')) ? response.next_page_token : "";
   })
@@ -88,7 +99,7 @@ const searchForCafesAndRestaurants = (
 //);
 
 app.listen(port, () => {
-  console.log(`Where2Meat listening on port ${port}`)
+  console.log(`Where2Meat listening on http://localhost:${port}`)
 })
 
 
@@ -110,7 +121,7 @@ Output: [-37.911281811443516, 145.13258626595612]
 */
 const findCentrePoint = (latLongPoints) => {
   //Find centre point by averaging cartesian points.
-  let centre_cart = {x: 0, y: 0, z: 0};
+  let centre_cart = { x: 0, y: 0, z: 0 };
   for (let point of latLongPoints) {
     //convert lat/lon to cartesian coordinates.
     centre_cart.x += Math.cos(radians(point[0])) * Math.cos(radians(point[1]));
