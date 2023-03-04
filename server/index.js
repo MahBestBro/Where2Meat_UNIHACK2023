@@ -2,7 +2,6 @@ const express = require('express')
 const path = require('path')
 const env = require('dotenv').config()
 const cors = require('cors')
-const autocompleteSearch = require("./places.js")
 
 const googleLocations = require('google-locations');
 const locations = new googleLocations(process.env.API_KEY);
@@ -19,6 +18,10 @@ app.set("view engine", "html");
 app.engine('html', require('ejs').renderFile);
 app.use(cors())
 
+// helper functions
+const { findCentrePoint } = require("./center.js")
+const autocompleteSearch = require("./places.js")
+
 
 app.get('/', (req, res) => {
   res.render("index")
@@ -31,8 +34,6 @@ app.get("/places/autocomplete/:q", async (req, res) => {
 })
 
 var next_page_token = "";
-
-
 
 class SearchError extends Error {
   constructor(message) {
