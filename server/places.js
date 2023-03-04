@@ -44,6 +44,34 @@ async function autocompleteLocationSearch(query) {
     return response.data
 }
 
-module.exports = autocompleteLocationSearch
+/*
+Finds nearby cafes and restaurants within a given radius at a latitude/longitude point.
+Parameters: 
+  location: An array of two numbers representing a latitude/longitude point (i.e., [lat, lon]).
+  radius_m [opt]: The search radius in metres.
+
+Example:
+    searchForFoodPlaces([-37.850921, 145.098048]).then((places) => console.log(places[0].name));
+    Output: McDonald's Burwood
+*/
+//TODO: add way to use next_page_token? 
+async function searchForFoodPlaces(location, radius_m = 100) {
+    const url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
+    url.searchParams.append("location", location)
+    url.searchParams.append("radius", radius_m)
+    url.searchParams.append("types", "cafe|restaurant|bar")
+    url.searchParams.append("key", process.env.API_KEY)
+
+    const response = await axios.get(url.href)
+    var places = response.data.results;
+    for (let i in places) {
+        for (let p in places[i].photos) {
+            places[i].photos[p].html_attributions.length = 0;  
+        }
+    } 
+    return places;
+}
+
+module.exports = { autocompleteLocationSearch, searchForFoodPlaces }
 
 // console.log((autocompleteLocationSearch("howitt")));

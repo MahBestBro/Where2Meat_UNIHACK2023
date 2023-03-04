@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const env = require('dotenv').config()
 const cors = require('cors')
+const https = require('https')
+const url = require('url')
 
 const googleLocations = require('google-locations');
 const locations = new googleLocations(process.env.API_KEY);
@@ -20,8 +22,8 @@ app.use(cors())
 
 // helper functions
 const { findCentrePoint } = require("./center.js")
-const autocompleteSearch = require("./places.js")
-
+const autocompleteSearch = require("./places.js").autocompleteLocationSearch
+const _searchForFoodPlaces = require("./places.js").searchForFoodPlaces
 
 app.get('/', (req, res) => {
   res.render("index")
@@ -46,8 +48,8 @@ class SearchError extends Error {
 Finds nearby cafes and restaurants within a given radius at a latitude/longitude point.
 Parameters: 
   lat_lon_point: An array of two numbers representing a latitude/longitude point (i.e., [lat, lon]).
-  callback: A callback function that takes an (err, place) as arguments, and is called on each place found. 'place' is the 
-  results received back from the places API (for info on properties, see 
+  callback: A callback function that takes an (err, places) as arguments. 'places' are the results received back from 
+  the places API (for info on properties, see 
   https://developers.google.com/maps/documentation/places/web-service/search-nearby#Place).
   radius_m [opt]: The search radius in metres.
   search_with_previous_options [opt]: If you wish to search again with the same parameters passed to a previous call to
@@ -78,15 +80,27 @@ const searchForFoodPlaces = (
   }
 
   locations.search(options, (err, response) => {
-    for (let place of response.results) {
-      locations.details({ placeid: place.place_id }, (err, response) => {
-        const result = response.result;
-        for (let i in result.photos) result.photos[i].html_attributions.length = 0;
-        callback(err, result);
-      });
+    var places = response.results;
+    for (let i in places) {
+      for (let p in places[i].photos) {
+        places[i].photos[p].html_attributions.length = 0;
+      }
     }
+    callback(err, places);
     next_page_token = (response.hasOwnProperty('next_page_token')) ? response.next_page_token : "";
-  })
+  });
+}
+
+/*
+Gets further details of a place with the given 'place_id'. Note: This will probably need to be called inside of a callback 
+function like searchForFoodPlaces, where it is possible to retrieve the place_id.
+*/
+const getFurtherDetails = (place_id, callback) => {
+  locations.details({ placeid: place_id }, (err, response) => {
+    const result = response.result;
+    for (let i in result.photos) result.photos[i].html_attributions.length = 0;
+    callback(err, result);
+  });
 }
 
 /*
