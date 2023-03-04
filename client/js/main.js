@@ -1,7 +1,7 @@
 import getPlaces from "./locationfinder.js"
 
 const API_KEY = "AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI";
-getPlaces("monash", API_KEY)
+// getPlaces("monash", API_KEY)
 
 
 function initMap() {
@@ -20,7 +20,6 @@ function initMap() {
             },
         });
     }), err => console.log(err));
-
 
     // const marker = new google.maps.Marker({
     //     position: uluru,

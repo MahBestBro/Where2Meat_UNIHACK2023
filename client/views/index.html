@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
     <!-- css -->
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/nav.css">
+    <!-- <link rel="stylesheet" href="./css/style.css"> -->
+    <!-- <link rel="stylesheet" href="./css/nav.css"> -->
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/nav.css">
 
     <!-- js -->
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./main.js"></script>
     <script defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI&callback=initMap">
             </script>
@@ -21,7 +23,7 @@
     <aside>
         <nav>
             <header class="logo">
-                <img src="./public/logo.png" alt="logo" title="where to meet">
+                <img src="./logo.png" alt="logo" title="where to meet">
                 where 2 meat
             </header>
             <details class="location" open>
@@ -30,17 +32,27 @@
                 </summary>
                 <div class="location-picker" data-items="3">
                     <div class="location-picker__item">
-                        <input type="text" name="location-1" placeholder="Enter location">
+                        <input type="text" name="location-1" placeholder="Enter location"
+                               list="list-1">
+                        <datalist id="list-1">
+                        </datalist>
                     </div>
                     <div class="location-picker__item">
-                        <input type="text" name="location-2" placeholder="Enter location">
+                        <input type="text" name="location-2" placeholder="Enter location"
+                               list="list-2">
+                        <datalist id="list-2">
+                        </datalist>
                     </div>
                     <div class="location-picker__item">
-                        <input type="text" name="location-3" placeholder="Enter location">
+                        <input type="text" name="location-3" placeholder="Enter location"
+                               list="list-3">
+                        <datalist id="list-3">
+                        </datalist>
                     </div>
                     <div class="add-item">
                         <button class="add-item__btn">
-                            <img src="./public/plus.svg" alt="add item">
+                            <!-- <img src="./public/plus.svg" alt="add item"> -->
+                            <img src="/plus.svg" alt="add item">
                         </button>
                     </div>
                 </div>
