@@ -31,16 +31,16 @@ async function searchForFoodPlaces(location, radius_m = 100) {
     const url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
     url.searchParams.append("location", location)
     url.searchParams.append("radius", radius_m)
-    url.searchParams.append("types", "cafe|restaurant|bar")
+    url.searchParams.append("types", "cafe|restaurant")
     url.searchParams.append("key", process.env.API_KEY)
 
     const response = await axios.get(url.href)
     var places = response.data.results;
     for (let i in places) {
         for (let p in places[i].photos) {
-            places[i].photos[p].html_attributions.length = 0;  
+            places[i].photos[p].html_attributions.length = 0;
         }
-    } 
+    }
     return places;
 }
 
@@ -53,6 +53,6 @@ async function placeDetails(placeId) {
     return response.data
 }
 
-module.exports = autocompleteLocationSearch
+module.exports = { autocompleteLocationSearch, searchForFoodPlaces, placeDetails }
 
 // console.log((autocompleteLocationSearch("howitt")));

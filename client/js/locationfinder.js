@@ -87,8 +87,20 @@ submitButton.addEventListener("click", async (e) => {
     console.log("locations", locations)
     // get the central location
     const recommendations = await fetch(`/recommendations?locations=${JSON.stringify(locations)}`);
-    const data = await recommendations.json();
-    console.log(data)
+    const { centerPoint, data } = await recommendations.json();
+
+    // marker for center point
+    new google.maps.Marker({
+        position: {
+            lat: centerPoint[0],
+            lng: centerPoint[1]
+        },
+        map: window.map,
+        title: "center point",
+        fillColor: "blue"
+    })
+
+    console.log(centerPoint, data)
 
 })
 

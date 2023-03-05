@@ -22,7 +22,7 @@ app.use(cors())
 
 // helper functions
 const { findCentrePoint } = require("./center.js")
-const { autocompleteLocationSearch, placeDetails } = require("./places.js")
+const { autocompleteLocationSearch, placeDetails, searchForFoodPlaces } = require("./places.js")
 
 
 app.get('/', (req, res) => {
@@ -45,28 +45,30 @@ app.get("/recommendations", async (req, res) => {
   // query string form: /recommendations?locations=[{lat: 1, lng: 2}, {lat: 3, lng: 4}]
   const locations = JSON.parse(req.query.locations).map(location => [location.lat, location.lng])
   console.log(locations)
-  const centrePoint = findCentrePoint(locations)
-  console.log(centrePoint);
+  const centerPoint = findCentrePoint(locations)
+  console.log(centerPoint);
   // search for restaurants
-  const data = []
-  await searchForFoodPlaces(centrePoint, (err, place) => {
-    if (err) return
-    data.push(place)
-    // res.json(place)
-    // const temp = {
-    //   name: place.name,
-    //   rating: place.rating,
-    //   address: place.vicinity,
-    //   types: place.types
-    // }
-    // if (place.photos) {
-    //   temp.photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photos[0].photo_reference}&key=${process.env.API_KEY}`
-    // }
-    // data.push(temp)
-  }, 1000, false)
+  const data = (await searchForFoodPlaces(centerPoint, 1000)).map(place => {
+    const temp = {
+      name: place.name,
+      rating: place.rating,
+      price_level: place.price_level,
+      location: place.geometry.location,
+      place_id: place.place_id,
+      address: place.vicinity,
+      reviews: place.reviews
+    }
+    if (place.photos) {
+      temp.photo = place.photos[0]
+    }
+    return temp
+  })
 
   console.log(data)
-  // res.json(data)
+  res.json({
+    centerPoint,
+    data
+  })
 })
 
 var next_page_token = "";
@@ -94,36 +96,36 @@ Example:
     searchForFoodPlaces([-37.850921, 145.098048], (err, place) => console.log(place.name));
     Output: McDonald's Burwood
 */
-const searchForFoodPlaces = (
-  lat_lon_point,
-  callback,
-  radius_m = 100,
-  search_with_previous_options = false,
-) => {
-  const options = {
-    location: lat_lon_point,
-    radius: radius_m,
-    types: ["cafe", "restaurant"/*, "bar"*/]
-  };
+// const searchForFoodPlaces = (
+//   lat_lon_point,
+//   callback,
+//   radius_m = 100,
+//   search_with_previous_options = false,
+// ) => {
+//   const options = {
+//     location: lat_lon_point,
+//     radius: radius_m,
+//     types: ["cafe", "restaurant"/*, "bar"*/]
+//   };
 
-  if (search_with_previous_options) {
-    if (next_page_token === "")
-      throw new SearchError("Attempted to search with previous options when no further results can be found.");
+//   if (search_with_previous_options) {
+//     if (next_page_token === "")
+//       throw new SearchError("Attempted to search with previous options when no further results can be found.");
 
-    options.page_token = next_page_token;
-  }
+//     options.page_token = next_page_token;
+//   }
 
-  locations.search(options, (err, response) => {
-    var places = response.results;
-    for (let i in places) {
-      for (let p in places[i].photos) {
-        places[i].photos[p].html_attributions.length = 0;
-      }
-    }
-    callback(err, places);
-    next_page_token = (response.hasOwnProperty('next_page_token')) ? response.next_page_token : "";
-  });
-}
+//   locations.search(options, (err, response) => {
+//     var places = response.results;
+//     for (let i in places) {
+//       for (let p in places[i].photos) {
+//         places[i].photos[p].html_attributions.length = 0;
+//       }
+//     }
+//     callback(err, places);
+//     next_page_token = (response.hasOwnProperty('next_page_token')) ? response.next_page_token : "";
+//   });
+// }
 
 /*
 Gets further details of a place with the given 'place_id'. Note: This will probably need to be called inside of a callback 
