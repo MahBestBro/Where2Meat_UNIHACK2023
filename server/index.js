@@ -85,7 +85,7 @@ app.get("/recommendations", async (req, res) => {
 
 app.get("/default/recommendations", async (req, res) => {
     const defaultjson = require("./Clayton_places.json")
-    const data = defaultjson.map(place => {
+    const data = defaultjson.results.map(place => {
         const temp = {
             name: place.name,
             rating: place.rating,
@@ -106,6 +106,7 @@ app.get("/default/recommendations", async (req, res) => {
         }
         return temp
     })
+    res.json(data)
 })
 
 var next_page_token = "";
