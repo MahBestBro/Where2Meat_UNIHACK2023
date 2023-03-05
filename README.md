@@ -4,6 +4,7 @@
 
 - [Images](#images) :file_folder:
 - [Setup Requirements](#setup) :rocket:
+- [Libraries and APIs used](#libraries) :computer:
 - [Future Plans](#plans) :bulb:
 
 <a name="images"></a>
@@ -22,7 +23,7 @@ The blue marker is the center point (you can hover over all the markers to see w
 
 <a name="setup"></a>
 
-## Setup Requirements
+## Setup Requirements :rocket:
 
 The project consists of 2 main components, the client side or frontend and the server side or backend. These compoents can be found in the `client/` and `server/` folders respectively.
 
@@ -38,7 +39,21 @@ Next, you will need to create a `.env` file inside `server/`
 API_KEY=yourApiKey
 ```
 
-## Libraries and APIs Used
+To install the dependencies for the projects, use the command
+
+```bash
+yarn install
+```
+
+To run the project, simply use the command
+
+```bash
+yarn start
+```
+
+<a name="libraries"></a>
+
+## Libraries and APIs Used :computer:
 
 1. Google Maps API
 2. Google Places API
