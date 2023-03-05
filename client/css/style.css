@@ -15,6 +15,18 @@ body {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     height: 100vh;
     color: var(--white);
+    display: flex;
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        flex-direction: column-reverse;
+    }
+
+    aside {
+        width: 100%;
+        height: fit-content;
+    }
 }
 
 .flex {
@@ -43,4 +55,5 @@ main {
 #map {
     height: 100%;
     width: 100%;
+    min-height: 50vh;
 }

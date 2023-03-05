@@ -7,6 +7,14 @@ aside {
     overflow-x: hidden;
 }
 
+@media screen and (max-width: 800px) {
+    aside {
+        height: fit-content;
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
 nav {
     padding-inline: 1rem;
 }
