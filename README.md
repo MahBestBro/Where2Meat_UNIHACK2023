@@ -1,9 +1,10 @@
 # Where2Meat_UNIHACK2023
 
-## Table of Contents
+## Table of Contents :bulb:
 
 - [Images](#images) :file_folder:
 - [Setup Requirements](#setup) :rocket:
+- [Future Plans](#plans) :bulb:
 
 <a name="images"></a>
 
@@ -15,7 +16,7 @@ Initial Page
 Autocomplete Suggestions for search places
 ![image](https://user-images.githubusercontent.com/64310471/222941585-f6fddf99-46db-4b70-a7d6-8ecc21e915fe.png)
 
-THe blue marker is the center point (you can hover over all the markers to see which location they are for)
+The blue marker is the center point (you can hover over all the markers to see which location they are for)
 ![image](https://user-images.githubusercontent.com/64310471/222941674-2d7cdc3e-2077-4279-b666-e038869c812c.png)
 
 
@@ -41,9 +42,10 @@ API_KEY=yourApiKey
 
 1. Google Maps API
 2. Google Places API
-3. All other NodeJS basedd libraries can be found in the `package.json` file
+3. All other NodeJS based libraries can be found in the `package.json` file
 
-## Future Plans
+<a name="plans"></a>
+## Future Plans :bulb:
 
 1. Be able to drag the center location marker to find a better or more ideal spot
-2. 
+2. Allow other users to enter their own location using a link instead of one user controlling it all
