@@ -7,7 +7,7 @@
 
 <a name="images"></a>
 
-## Images :file_folder
+## Images :file_folder:
 
 <a name="setup"></a>
 
