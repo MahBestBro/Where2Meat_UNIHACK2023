@@ -11,7 +11,14 @@ Example:
   searchForFoodPlaces([-37.850921, 145.098048], (err, place) => getHealthRating(place.place_id, (rating) => console.log(rating)));
   Output: 3.6
 */
+
+const clamp = (x, lo, hi) => Math.max(lo, Math.min(x, hi)) 
+
 const getHealthRating = (place_id, callback) => {
-    const health_rating = (((Math.random() > 0.5) + Math.random()) * (response.result.rating / 5)) * 5;
-    locations.details({ placeid: place_id }, (err, response) => callback(health_rating));
+    locations.details({ placeid: place_id }, (err, response) => {
+        const health_rating = clamp((Math.random() > 0.5) + Math.random() * response.result.rating, 0, 5);
+        callback(health_rating);
+    });
 }
+
+module.exports = { getHealthRating };
