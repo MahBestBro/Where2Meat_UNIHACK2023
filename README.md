@@ -9,6 +9,16 @@
 
 ## Images :file_folder:
 
+Initial Page
+![image](https://user-images.githubusercontent.com/64310471/222941549-a5c91b25-09c6-48a3-8a21-8501a06adac0.png)
+
+Autocomplete Suggestions for search places
+![image](https://user-images.githubusercontent.com/64310471/222941585-f6fddf99-46db-4b70-a7d6-8ecc21e915fe.png)
+
+THe blue marker is the center point (you can hover over all the markers to see which location they are for)
+![image](https://user-images.githubusercontent.com/64310471/222941674-2d7cdc3e-2077-4279-b666-e038869c812c.png)
+
+
 <a name="setup"></a>
 
 ## Setup Requirements
@@ -36,4 +46,4 @@ API_KEY=yourApiKey
 ## Future Plans
 
 1. Be able to drag the center location marker to find a better or more ideal spot
-2.
+2. 
