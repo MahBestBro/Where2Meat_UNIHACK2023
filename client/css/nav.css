@@ -91,7 +91,7 @@ footer.button-container button.add-item__btn {
     background-color: var(--white);
     padding: 0.5rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
 }
 
 .recommendation * {
@@ -125,15 +125,17 @@ footer.button-container button.add-item__btn {
     color: yellowgreen;
 }
 
+.price-level,
 .rating,
 .health {
     font-weight: 600;
     font-size: 1rem;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
 
-.rating div,
-.health div {
-    width: 1.5rem;
+.column-2 img {
+    aspect-ratio: 3/2;
+    object-fit: contain;
 }

@@ -127,17 +127,21 @@ submitButton.addEventListener("click", async (e) => {
                     <h2>${recommendation.name}</h2>
                     <div class="information">
                         <div class="rating">
-                            <div class="rating__value">${recommendation.rating}</div>
+                            <span class="rating__value">Rating ${recommendation.rating}</span>
                             <span>${"★".repeat(Math.round(recommendation.rating))}</span>
                         </div>
                         <div class="health">
-                            <div>${recommendation.rating}</div>
-                            <span>${"❤️".repeat(Math.round(recommendation.rating))}</span>
+                            <span>Health ${recommendation.health_rating}</span>
+                            <span>${"❤️".repeat(Math.round(recommendation.health_rating))}</span>
+                        </div>
+                        <div class="price-level">
+                            <span>Price level:</span>
+                            <span>${"💰".repeat(Math.round(recommendation.price_level)) ?? ""}</span>
                         </div>
                     </div>
                 </div>
                 <div class="column-2">
-                    <div class="image">
+                    <img src="${recommendation.photo}">
                 </div>
             </article>
         `

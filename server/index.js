@@ -27,58 +27,94 @@ const { getHealthRating } = require("./health_rating.js")
 
 
 app.get('/', (req, res) => {
-  res.render("index")
+    res.render("index")
 })
 
 app.get("/places/autocomplete/:q", async (req, res) => {
-  const query = req.params.q
-  const response = await autocompleteLocationSearch(query)
-  res.send(response)
+    const query = req.params.q
+    const response = await autocompleteLocationSearch(query)
+    res.send(response)
 })
 
 app.get("/places/details/:placeid", async (req, res) => {
-  const placeId = req.params.placeid
-  const response = await placeDetails(placeId)
-  res.send(response)
+    const placeId = req.params.placeid
+    const response = await placeDetails(placeId)
+    res.send(response)
 })
 
 app.get("/recommendations", async (req, res) => {
-  // query string form: /recommendations?locations=[{lat: 1, lng: 2}, {lat: 3, lng: 4}]
-  const locations = JSON.parse(req.query.locations).map(location => [location.lat, location.lng])
-  console.log(locations)
-  const centerPoint = findCentrePoint(locations)
-  console.log(centerPoint);
-  // search for restaurants
-  const data = (await searchForFoodPlaces(centerPoint, 1000)).map(place => {
-    const temp = {
-      name: place.name,
-      rating: place.rating,
-      price_level: place.price_level,
-      location: place.geometry.location,
-      place_id: place.place_id,
-      address: place.vicinity,
-      reviews: place.reviews
-    }
-    if (place.photos) {
-      temp.photo = place.photos[0]
-    }
-    return temp
-  })
+    // query string form: /recommendations?locations=[{lat: 1, lng: 2}, {lat: 3, lng: 4}]
+    const locations = JSON.parse(req.query.locations).map(location => [location.lat, location.lng])
+    console.log(locations)
+    const centerPoint = findCentrePoint(locations)
+    console.log(centerPoint);
+    // search for restaurants
+    const data = (await searchForFoodPlaces(centerPoint, 1000)).map(place => {
+        if (!place.rating) return null;
+        if (!place.photos) return null;
 
-  console.log(data)
-  res.json({
-    centerPoint,
-    data
-  })
+        const temp = {
+            name: place.name,
+            rating: place.rating,
+            price_level: place.price_level,
+            location: place.geometry.location,
+            place_id: place.place_id,
+            address: place.vicinity,
+            reviews: place.reviews
+        }
+        temp.health_rating = parseFloat(getHealthRating(place.rating)).toFixed(1)
+
+        if (place.photos) {
+            const url = new URL("https://maps.googleapis.com/maps/api/place/photo")
+            url.searchParams.append("photo_reference", place.photos[0].photo_reference)
+            url.searchParams.append("maxwidth", 400)
+            url.searchParams.append("key", process.env.API_KEY)
+            temp.photo = url.toString()
+            // temp.photo
+            // place.photos[0]
+        }
+        return temp
+    }).filter(x => x !== null)
+
+    console.log(data)
+    res.json({
+        centerPoint,
+        data
+    })
+})
+
+app.get("/default/recommendations", async (req, res) => {
+    const defaultjson = require("./Clayton_places.json")
+    const data = defaultjson.map(place => {
+        const temp = {
+            name: place.name,
+            rating: place.rating,
+            price_level: place.price_level,
+            location: place.geometry.location,
+            place_id: place.place_id,
+            address: place.vicinity,
+            reviews: place.reviews
+        }
+        if (place.photos) {
+            const url = new URL("https://maps.googleapis.com/maps/api/place/photo")
+            url.searchParams.append("photo_reference", place.photos[0].photo_reference)
+            url.searchParams.append("maxwidth", 400)
+            url.searchParams.append("key", process.env.API_KEY)
+            temp.photo = url.toString()
+            // temp.photo
+            // place.photos[0]
+        }
+        return temp
+    })
 })
 
 var next_page_token = "";
 
 class SearchError extends Error {
-  constructor(message) {
-    super(message); // (1)
-    this.name = "SearchError"; // (2)
-  }
+    constructor(message) {
+        super(message); // (1)
+        this.name = "SearchError"; // (2)
+    }
 }
 
 /*
@@ -133,11 +169,11 @@ Gets further details of a place with the given 'place_id'. Note: This will proba
 function like searchForFoodPlaces, where it is possible to retrieve the place_id.
 */
 const getFurtherDetails = (place_id, callback) => {
-  locations.details({ placeid: place_id }, (err, response) => {
-    const result = response.result;
-    for (let i in result.photos) result.photos[i].html_attributions.length = 0;
-    callback(err, result);
-  });
+    locations.details({ placeid: place_id }, (err, response) => {
+        const result = response.result;
+        for (let i in result.photos) result.photos[i].html_attributions.length = 0;
+        callback(err, result);
+    });
 }
 
 
@@ -164,5 +200,5 @@ const getFurtherDetails = (place_id, callback) => {
 //);
 
 app.listen(port, () => {
-  console.log(`Where2Meat listening on http://localhost:${port}`)
+    console.log(`Where2Meat listening on http://localhost:${port}`)
 })

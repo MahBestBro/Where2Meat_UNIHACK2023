@@ -12,13 +12,18 @@ Example:
   Output: 3.6
 */
 
-const clamp = (x, lo, hi) => Math.max(lo, Math.min(x, hi)) 
+const clamp = (x, lo, hi) => Math.max(lo, Math.min(x, hi))
 
-const getHealthRating = (place_id, callback) => {
-    locations.details({ placeid: place_id }, (err, response) => {
-        const health_rating = clamp((Math.random() > 0.5) + Math.random() * response.result.rating, 0, 5);
-        callback(health_rating);
-    });
+// const getHealthRating = (place_id, callback) => {
+//     locations.details({ placeid: place_id }, (err, response) => {
+//         const health_rating = clamp((Math.random() > 0.5) + Math.random() * response.result.rating, 0, 5);
+//         callback(health_rating);
+//     });
+// }
+
+function getHealthRating(rating) {
+  const health_rating = clamp((Math.random() > 0.5) + Math.random() * rating, 1, 5);
+  return health_rating;
 }
 
 module.exports = { getHealthRating };
