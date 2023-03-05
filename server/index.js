@@ -86,6 +86,9 @@ app.get("/recommendations", async (req, res) => {
 app.get("/default/recommendations", async (req, res) => {
     const defaultjson = require("./Clayton_places.json")
     const data = defaultjson.results.map(place => {
+        if (!place.rating) return null;
+        if (!place.photos) return null;
+
         const temp = {
             name: place.name,
             rating: place.rating,
@@ -95,6 +98,8 @@ app.get("/default/recommendations", async (req, res) => {
             address: place.vicinity,
             reviews: place.reviews
         }
+        temp.health_rating = parseFloat(getHealthRating(place.rating)).toFixed(1)
+
         if (place.photos) {
             const url = new URL("https://maps.googleapis.com/maps/api/place/photo")
             url.searchParams.append("photo_reference", place.photos[0].photo_reference)

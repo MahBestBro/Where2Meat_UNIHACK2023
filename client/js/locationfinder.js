@@ -138,6 +138,9 @@ submitButton.addEventListener("click", async (e) => {
                             <span>Price level:</span>
                             <span>${"💰".repeat(Math.round(recommendation.price_level)) ?? ""}</span>
                         </div>
+                        <div class="adress">
+                            ${recommendation.address}
+                        </div>
                     </div>
                 </div>
                 <div class="column-2">
