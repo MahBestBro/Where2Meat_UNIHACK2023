@@ -1,4 +1,5 @@
 # Where2Meat_UNIHACK2023
+Where 2 Meat is a convenient site that not only locates the best central meeting point for you and all your friends, but also offers a range of restaurants and café options in the vicinity of the central point. Simply enter your location and your friends’, and lo and behold, the common point is shown on the map with all the recommended wonderful restaurants and cafes that you can visit to catch up with your old buds. The estimated precise range, address, ratings, and opening hours are also presented so that the user can make a decision that everyone is happy with. Moreover, a health rating for each one of the options is presented for those who want to watch what they eat
 
 ## Table of Contents :bulb:
 
