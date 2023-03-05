@@ -3,6 +3,8 @@ aside {
     background-color: var(--primary);
     min-width: 500px;
     max-width: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 nav {
@@ -43,7 +45,6 @@ nav header img {
 nav input {
     width: 100%;
     padding: 5px 8px;
-    height: 1.5rem;
 }
 
 footer.button-container {
@@ -100,7 +101,7 @@ footer.button-container button.add-item__btn {
 .recommendation h2 {
     text-transform: capitalize;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 700;
     align-self: flex-start;
 }
 
@@ -114,4 +115,25 @@ footer.button-container button.add-item__btn {
     object-fit: cover;
     border-radius: 5px;
     align-self: end;
+}
+
+.information {
+    padding-inline: 1rem;
+}
+
+.stars {
+    color: yellowgreen;
+}
+
+.rating,
+.health {
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.rating div,
+.health div {
+    width: 1.5rem;
 }
