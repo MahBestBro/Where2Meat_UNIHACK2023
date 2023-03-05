@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/nav.css">
+
+    <!-- js -->
+    <script type="module" src="./js/main.js"></script>
+    <!-- <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI&callback=initMap">
+        </script> -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=places&v=weekly"
+        defer></script>
+</head>
+
+<body class="flex">
+    <aside>
+        <nav>
+            <header class="logo">
+                <img src="./public/logo.png" alt="logo" title="where to meet">
+                where 2 meat
+            </header>
+            <details class="location" open>
+                <summary>
+                    Location
+                </summary>
+                <div class="location-picker" data-items="3">
+                    <div class="location-picker__item">
+                        <input type="text" name="location-1" placeholder="Enter location">
+                    </div>
+                    <div class="location-picker__item">
+                        <input type="text" name="location-2" placeholder="Enter location">
+                    </div>
+                    <div class="location-picker__item">
+                        <input type="text" name="location-3" placeholder="Enter location">
+                    </div>
+                    <div class="add-item">
+                        <button class="add-item__btn">
+                            <img src="./public/plus.svg" alt="add item">
+                        </button>
+                    </div>
+                </div>
+                <div>
+            </details>
+        </nav>
+    </aside>
+    <main>
+        <section class="main">
+            <div id="map"></div>
+            <!-- <iframe style="border:0" loading="lazy" allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAGH3JiAZfOMBon4qNy-MBiL7PFGqSDAyI
+    &q=caulfield">
+            </iframe> -->
+        </section>
+    </main>
+
+</body>
+
+</html>
